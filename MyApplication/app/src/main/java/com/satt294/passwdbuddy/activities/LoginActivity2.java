@@ -1,16 +1,20 @@
 package com.satt294.passwdbuddy.activities;
 
+import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.andrognito.pinlockview.IndicatorDots;
 import com.andrognito.pinlockview.PinLockListener;
 import com.andrognito.pinlockview.PinLockView;
 import com.satt294.passwdbuddy.R;
+import com.satt294.passwdbuddy.exceptions.PBAuthenticationException;
+import com.satt294.passwdbuddy.services.Authenticator;
 
 public class LoginActivity2 extends AppCompatActivity {
 
@@ -20,6 +24,8 @@ public class LoginActivity2 extends AppCompatActivity {
     private PinLockView mPinLockView;
     private IndicatorDots mIndicatorDots;
 
+    private Authenticator authenticator;
+
     /**
      * Listener function for the Pin Lock View
      */
@@ -27,8 +33,29 @@ public class LoginActivity2 extends AppCompatActivity {
         public String TAG = "[PIN LOCK VIEW]";
 
         @Override
+        /**
+         * This function is called only when the user has entered the PIN of required length
+         */
         public void onComplete(String pin) {
+            // Process further only if the user has entered 4-digit PIN
+            // TODO: Make the pin length variable
             Log.i(TAG, "Info the user has entered the pin:" + pin);
+            // Attempt to check and load the view
+
+            try {
+                authenticator.authenticate(pin);
+
+                // Show the list view
+            } catch (PBAuthenticationException e) {
+                Log.e(TAG, "onComplete: Exception while trying to authenticate the PIN", e);
+
+                // Update the view with error to the user
+                mPinLockView.resetPinLockView();
+                TextView tvMessage = (TextView) findViewById(R.id.tv_message);
+                // TODO: P3: Wiggle animation for the message
+                tvMessage.setText("Wrong PIN. Try again.");
+                tvMessage.setTextSize(22);
+            }
         }
 
         @Override
@@ -38,9 +65,19 @@ public class LoginActivity2 extends AppCompatActivity {
 
         @Override
         public void onPinChange(int pinLength, String intermediatePin) {
-            Log.d(TAG, "Pin changed, new length " + pinLength + " with intermediate pin " + intermediatePin);
+            // Do not do anything while the user is entering the PIN
         }
     };
+
+    /**
+     * Function checks whether the entered pin is the right pin to proceed further
+     *
+     * @return
+     */
+    private boolean verifyPIN(String pin) {
+        // TODO: Check the PIN from DB
+        return true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +89,7 @@ public class LoginActivity2 extends AppCompatActivity {
         // PIN Lock View
         setContentView(R.layout.activity_login2);
 
-        // Get tje PIN Lock view
+        // Get the PIN Lock view
         mPinLockView = (PinLockView) findViewById(R.id.pin_lock_view);
         mIndicatorDots = (IndicatorDots) findViewById(R.id.indicator_dots);
 
@@ -67,5 +104,15 @@ public class LoginActivity2 extends AppCompatActivity {
         // enable animations for the indicator dots
         mIndicatorDots.setIndicatorType(IndicatorDots.IndicatorType.FILL_WITH_ANIMATION);
 
+        // Initilise the services
+        initServices();
+    }
+
+    /**
+     * Function to initialise all the services used by the activity
+     */
+    private void initServices() {
+        // authentication service
+        authenticator = Authenticator.getInstance();
     }
 }

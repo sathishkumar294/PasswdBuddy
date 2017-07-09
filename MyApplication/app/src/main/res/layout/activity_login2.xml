@@ -16,7 +16,7 @@
         android:src="@mipmap/ic_check_shield" />
 
     <TextView
-        android:id="@+id/plv_message"
+        android:id="@+id/tv_message"
         android:layout_width="256dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/profile_image"
@@ -33,7 +33,7 @@
         android:id="@+id/indicator_dots"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/plv_message"
+        android:layout_below="@id/tv_message"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="36dp" />
 
