@@ -1,5 +1,6 @@
 package com.satt294.passwdbuddy.activities;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -46,6 +47,9 @@ public class LoginActivity2 extends AppCompatActivity {
                 authenticator.authenticate(pin);
 
                 // Show the list view
+                Intent listIntent = new Intent(LoginActivity2.this, ListActivity.class);
+                startActivity(listIntent);
+
             } catch (PBAuthenticationException e) {
                 Log.e(TAG, "onComplete: Exception while trying to authenticate the PIN", e);
 
