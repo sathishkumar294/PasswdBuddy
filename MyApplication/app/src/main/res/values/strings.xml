@@ -16,5 +16,11 @@
     <string name="title_activity_list">Codes</string>
     <string name="search_hint">Type to search...</string>
     <string name="title_activity_search">SearchActivity</string>
-    <string name="title_activity_credential">CredentialActivity</string>
+    <string name="title_activity_credential">Credential Details</string>
+    <string name="label_login">Login</string>
+    <string name="prompt_enter_your_login_username">Enter your login/username ...</string>
+    <string name="label_password">Password</string>
+    <string name="prompt_enter_password_here">Enter your description of \n password here...</string>
+    <string name="btn_save">SAVE</string>
+    <string name="btn_delete">DELETE</string>
 </resources>

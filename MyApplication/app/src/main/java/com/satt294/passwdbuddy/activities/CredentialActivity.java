@@ -17,6 +17,8 @@ public class CredentialActivity extends AppCompatActivity {
         setContentView(R.layout.activity_credential);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
     }
 
 }
