@@ -73,16 +73,6 @@ public class LoginActivity2 extends AppCompatActivity {
         }
     };
 
-    /**
-     * Function checks whether the entered pin is the right pin to proceed further
-     *
-     * @return
-     */
-    private boolean verifyPIN(String pin) {
-        // TODO: Check the PIN from DB
-        return true;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

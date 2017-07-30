@@ -16,4 +16,5 @@
     <string name="title_activity_list">Codes</string>
     <string name="search_hint">Type to search...</string>
     <string name="title_activity_search">SearchActivity</string>
+    <string name="title_activity_credential">CredentialActivity</string>
 </resources>
