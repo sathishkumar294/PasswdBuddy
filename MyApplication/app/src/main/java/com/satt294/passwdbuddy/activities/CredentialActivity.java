@@ -16,6 +16,11 @@ public class CredentialActivity extends AppCompatActivity {
 
     private CredentialManager credentialManager;
 
+    /**
+     * The credential corresponding to this view
+     */
+    private Credential credential = null;
+
     private EditText mLoginEditText;
     private EditText mDescriptionEditText;
     private Button mSaveUpdateBtn;
@@ -38,6 +43,11 @@ public class CredentialActivity extends AppCompatActivity {
         mDeleteBtn = (Button) findViewById(R.id.btn_DeleteCredential);
         mLoginEditText = (EditText) findViewById(R.id.et_Cred_Login);
         mDescriptionEditText = (EditText) findViewById(R.id.et_Cred_Description);
+
+        // Hide the delete button, if the view is not associated to a credential yet
+        if (credential == null || credential.getCid() == null) {
+            mDeleteBtn.setVisibility(View.INVISIBLE);
+        }
 
         mSaveUpdateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
