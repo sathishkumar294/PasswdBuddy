@@ -1,5 +1,6 @@
 package com.satt294.passwdbuddy.entities.DAO;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
@@ -20,7 +21,7 @@ import java.util.List;
 public interface ICredDAO {
 
     @Query("SELECT * FROM CREDS")
-    List<Credential> getAll();
+    LiveData<List<Credential>> getAll();
 
     @Query("SELECT * FROM CREDS where DESCRIPTION LIKE :description")
     List<Credential> getAllByLogin(String description);

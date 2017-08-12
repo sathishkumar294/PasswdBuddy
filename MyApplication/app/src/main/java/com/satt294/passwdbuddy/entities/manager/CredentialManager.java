@@ -7,6 +7,8 @@ import android.widget.Toast;
 import com.satt294.passwdbuddy.entities.db.AppDB;
 import com.satt294.passwdbuddy.entities.entity.Credential;
 
+import java.util.List;
+
 /**
  * Service layer between the activities and DB.
  * Provides access to Credential objects.<p> Singleton.
@@ -58,7 +60,6 @@ public class CredentialManager {
      * @param credential
      */
     public void saveOrUpdate(Credential credential) {
-        long cid = -1;
 
         if (credential.getCid() != null) {
             appDb.getCredDAO().update(credential);
@@ -67,7 +68,7 @@ public class CredentialManager {
 
                 @Override
                 protected Integer doInBackground(Credential... credentials) {
-                    Long lCid= appDb.getCredDAO().save(credentials[0]);
+                    Long lCid = appDb.getCredDAO().save(credentials[0]);
                     return lCid.intValue();
                 }
 
@@ -77,10 +78,15 @@ public class CredentialManager {
                     Toast.makeText(mContext, "Saved the user in DB. (ID: " + cId + ")", Toast.LENGTH_SHORT).show();
                 }
             }.execute(credential);
-
-
         }
+    }
 
-
+    /**
+     * Function returns all the credentials stored in the DB
+     *
+     * @return
+     */
+    public List<Credential> getAll() {
+        return appDb.getCredDAO().getAll();
     }
 }
