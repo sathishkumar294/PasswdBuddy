@@ -29,6 +29,7 @@ import com.satt294.passwdbuddy.entities.db.AppDB;
 import com.satt294.passwdbuddy.entities.entity.Credential;
 import com.satt294.passwdbuddy.helpers.IMessageHelper;
 import com.satt294.passwdbuddy.viewadaptors.RecyclerViewAdaptor;
+import com.satt294.passwdbuddy.viewmodels.AddCredentialViewModel;
 import com.satt294.passwdbuddy.viewmodels.ListCredentialViewModel;
 
 import java.util.ArrayList;
@@ -88,7 +89,18 @@ public class ListCredentialActivity extends AppCompatActivity implements Lifecyc
 
         // Initialise services
         recyclerView = (RecyclerView) findViewById(R.id.rcRecyclerView);
-        recyclerViewAdaptor = new RecyclerViewAdaptor(new ArrayList<Credential>(), new View.OnLongClickListener() {
+        recyclerViewAdaptor = new RecyclerViewAdaptor(new ArrayList<Credential>(), new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                //TODO: Open the credential view
+                Credential credential = (Credential) view.getTag();
+                Intent credentialIntent = new Intent(ListCredentialActivity.this, AddCredentialActivity.class);
+                credentialIntent.putExtra("credId", credential.getCid());
+                startActivity(credentialIntent);
+                return;
+            }
+        }, new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
                 Credential credential = (Credential) view.getTag();

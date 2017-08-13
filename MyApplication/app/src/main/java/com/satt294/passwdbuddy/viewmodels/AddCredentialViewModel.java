@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 
 import com.satt294.passwdbuddy.entities.db.AppDB;
 import com.satt294.passwdbuddy.entities.entity.Credential;
+import com.satt294.passwdbuddy.helpers.ICredentialFormFiller;
 import com.satt294.passwdbuddy.helpers.IMessageHelper;
 
 /**
@@ -52,6 +53,38 @@ public class AddCredentialViewModel extends AndroidViewModel {
         @Override
         protected void onPostExecute(Void dbID) {
             messageHelper.showToast("Saved the credential in the database.");
+        }
+    }
+
+    /**
+     * Asynchronously read the credential from DB using the ID and update the view
+     * accordingly
+     *
+     * @param cId
+     * @param formFiller
+     */
+    public void readCredential(Integer cId, @NonNull ICredentialFormFiller formFiller) {
+        new ReadAsyncTask(appDB, formFiller).execute(cId);
+    }
+
+    static class ReadAsyncTask extends AsyncTask<Integer, Void, Credential> {
+        private AppDB appDB;
+        private ICredentialFormFiller formFiller;
+
+        public ReadAsyncTask(AppDB appDB, ICredentialFormFiller formFiller) {
+            this.appDB = appDB;
+            this.formFiller = formFiller;
+        }
+
+
+        @Override
+        protected Credential doInBackground(Integer... ids) {
+            return appDB.getCredDAO().getById(ids[0]);
+        }
+
+        @Override
+        protected void onPostExecute(Credential credential) {
+            formFiller.updateViewForCredential(credential);
         }
     }
 

@@ -19,9 +19,26 @@ public class RecyclerViewAdaptor extends RecyclerView.Adapter<RecyclerViewAdapto
 
     private List<Credential> credentialList;
     private View.OnLongClickListener longClickListener;
+    private View.OnClickListener itemClickListener;
 
+    /**
+     * Only the data and Long click listener
+     */
     public RecyclerViewAdaptor(List<Credential> credentialList, View.OnLongClickListener longClickListener) {
         this.credentialList = credentialList;
+        this.longClickListener = longClickListener;
+    }
+
+    /**
+     * Bind the live data, single click and long click listeners
+     *
+     * @param credentialList
+     * @param clickListener
+     * @param longClickListener
+     */
+    public RecyclerViewAdaptor(List<Credential> credentialList, View.OnClickListener clickListener, View.OnLongClickListener longClickListener) {
+        this.credentialList = credentialList;
+        this.itemClickListener = clickListener;
         this.longClickListener = longClickListener;
     }
 
@@ -34,11 +51,20 @@ public class RecyclerViewAdaptor extends RecyclerView.Adapter<RecyclerViewAdapto
     public void onBindViewHolder(final RecyclerViewHolder holder, int position) {
         Credential credential = credentialList.get(position);
 
+        // Map the properties from the credential to an item
         holder.tvLogin.setText(credential.getLogin());
         holder.tvDesc.setText(credential.getDescription());
 
+        // Bind the credential to the item
         holder.itemView.setTag(credential);
-        holder.itemView.setOnLongClickListener(longClickListener);
+
+        // Bind the listeners
+        if (longClickListener != null) {
+            holder.itemView.setOnLongClickListener(longClickListener);
+        }
+        if (itemClickListener != null) {
+            holder.itemView.setOnClickListener(itemClickListener);
+        }
     }
 
     @Override

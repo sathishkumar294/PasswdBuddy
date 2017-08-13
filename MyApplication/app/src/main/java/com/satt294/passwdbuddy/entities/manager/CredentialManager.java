@@ -54,41 +54,4 @@ public class CredentialManager {
         return instance;
     }
 
-    /**
-     * Function to insert or update a credential information into DB
-     *
-     * @param credential
-     */
-    public void saveOrUpdate(Credential credential) {
-
-        if (credential.getCid() != null) {
-            appDb.getCredDAO().update(credential);
-        } else {
-            new AsyncTask<Credential, Void, Integer>() {
-
-                @Override
-                protected Integer doInBackground(Credential... credentials) {
-                    Long lCid = appDb.getCredDAO().save(credentials[0]);
-                    return lCid.intValue();
-                }
-
-                @Override
-                protected void onPostExecute(Integer cId) {
-                    // Inform the user
-                    Toast.makeText(mContext, "Saved the user in DB. (ID: " + cId + ")", Toast.LENGTH_SHORT).show();
-                }
-            }.execute(credential);
-        }
-    }
-
-    /**
-     * Function returns all the credentials stored in the DB
-     *
-     * @return
-     */
-    public List<Credential> getAll() {
-        //TODO: Remove this function
-//        return appDb.getCredDAO().getAll();
-        return null;
-    }
 }
