@@ -23,11 +23,12 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Toast;
 
+
 import com.satt294.passwdbuddy.R;
-import com.satt294.passwdbuddy.RecyclerViewAdaptor;
 import com.satt294.passwdbuddy.entities.db.AppDB;
 import com.satt294.passwdbuddy.entities.entity.Credential;
 import com.satt294.passwdbuddy.helpers.IMessageHelper;
+import com.satt294.passwdbuddy.viewadaptors.RecyclerViewAdaptor;
 import com.satt294.passwdbuddy.viewmodels.ListCredentialViewModel;
 
 import java.util.ArrayList;

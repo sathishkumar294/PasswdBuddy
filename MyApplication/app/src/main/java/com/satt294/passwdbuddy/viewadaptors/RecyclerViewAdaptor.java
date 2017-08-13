@@ -1,4 +1,4 @@
-package com.satt294.passwdbuddy;
+package com.satt294.passwdbuddy.viewadaptors;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.satt294.passwdbuddy.R;
 import com.satt294.passwdbuddy.entities.entity.Credential;
 
 import java.util.List;
