@@ -33,7 +33,7 @@ public interface ICredDAO {
     void update(Credential cred);
 
     @Delete
-    void remove(Credential cred);
+    void delete(Credential cred);
 
     @Query("SELECT * FROM CREDS WHERE cid=:cId")
     Credential getById(int cId);

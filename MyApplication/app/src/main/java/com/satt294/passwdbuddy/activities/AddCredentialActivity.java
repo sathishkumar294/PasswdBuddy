@@ -1,53 +1,49 @@
 package com.satt294.passwdbuddy.activities;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.satt294.passwdbuddy.R;
 import com.satt294.passwdbuddy.entities.entity.Credential;
 import com.satt294.passwdbuddy.entities.entity.CredentialBuilder;
-import com.satt294.passwdbuddy.entities.manager.CredentialManager;
+import com.satt294.passwdbuddy.helpers.IMessageHelper;
+import com.satt294.passwdbuddy.viewmodels.AddCredentialViewModel;
 
-public class CredentialActivity extends AppCompatActivity {
-
-    private CredentialManager credentialManager;
-
-    /**
-     * The credential corresponding to this view
-     */
-    private Credential credential = null;
+public class AddCredentialActivity extends AppCompatActivity {
 
     private EditText mLoginEditText;
     private EditText mDescriptionEditText;
     private Button mSaveUpdateBtn;
-    private Button mDeleteBtn;
 
+
+    /**
+     * View Model
+     */
+    private AddCredentialViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_credential);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setContentView(R.layout.activity_add_credential);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_add_credential);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        // Initialise
-        credentialManager = CredentialManager.getInstance(this);
 
         // Get the view components
         mSaveUpdateBtn = (Button) findViewById(R.id.btn_UpdateCredential);
-        mDeleteBtn = (Button) findViewById(R.id.btn_DeleteCredential);
         mLoginEditText = (EditText) findViewById(R.id.et_Cred_Login);
         mDescriptionEditText = (EditText) findViewById(R.id.et_Cred_Description);
 
-        // Hide the delete button, if the view is not associated to a credential yet
-        if (credential == null || credential.getCid() == null) {
-            mDeleteBtn.setVisibility(View.INVISIBLE);
-        }
+        // Get the viewModel
+        viewModel = ViewModelProviders.of(this).get(AddCredentialViewModel.class);
 
         mSaveUpdateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,13 +61,32 @@ public class CredentialActivity extends AppCompatActivity {
 
                 // Get the credential to store
                 CredentialBuilder builder = new CredentialBuilder();
-                Credential cred = builder.setLogin(login).setDescription(description).build();
+                Credential credential = builder.setLogin(login).setDescription(description).build();
 
                 // Save the credentials
-                credentialManager.saveOrUpdate(cred);
+                viewModel.addCredential(credential, getMessageHelper());
+
+                finish();
             }
         });
 
+    }
+
+    /**
+     * Return the implementation of the {@link IMessageHelper} to show the toast
+     * when process is completed in the view model without explicitly calling
+     * a method of the view.
+     *
+     * @return
+     */
+    @NonNull
+    protected IMessageHelper getMessageHelper() {
+        return new IMessageHelper() {
+            @Override
+            public void showToast(String message) {
+                Toast.makeText(AddCredentialActivity.this, "Saved the credential in DB.", Toast.LENGTH_SHORT).show();
+            }
+        };
     }
 
 }

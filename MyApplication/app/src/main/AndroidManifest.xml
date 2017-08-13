@@ -23,7 +23,7 @@
         </activity>
         <!-- Activity to show the list of items containing the search in app bar -->
         <activity
-            android:name=".activities.CredListActivity"
+            android:name=".activities.ListCredentialActivity"
             android:label="@string/title_activity_list"
             android:theme="@style/AppTheme">
             <meta-data
@@ -41,12 +41,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.CredentialActivity"
+            android:name=".activities.AddCredentialActivity"
             android:label="@string/title_activity_credential"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.CredListActivity" />
+                android:value=".activities.ListCredentialActivity" />
         </activity>
     </application>
 

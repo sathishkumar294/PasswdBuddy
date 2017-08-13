@@ -87,6 +87,8 @@ public class CredentialManager {
      * @return
      */
     public List<Credential> getAll() {
-        return appDb.getCredDAO().getAll();
+        //TODO: Remove this function
+//        return appDb.getCredDAO().getAll();
+        return null;
     }
 }

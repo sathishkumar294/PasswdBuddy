@@ -46,7 +46,7 @@ public class LoginActivity2 extends AppCompatActivity {
                 authenticator.authenticate(pin);
 
                 // Show the list view
-                Intent listIntent = new Intent(LoginActivity2.this, CredListActivity.class);
+                Intent listIntent = new Intent(LoginActivity2.this, ListCredentialActivity.class);
                 startActivity(listIntent);
 
             } catch (PBAuthenticationException e) {
