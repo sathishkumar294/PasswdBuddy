@@ -89,7 +89,8 @@ public class AddCredentialActivity extends AppCompatActivity {
         });
 
         // Check whether this is a new Credential form or an update form
-        if (getIntent().getExtras().get("credId") != null) {
+        if (getIntent().getExtras() != null && getIntent()
+                .getExtras().get("credId") != null) {
             // This is an existing credential
             formStatus = FormStatus.UPDATE;
 
